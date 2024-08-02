@@ -17,3 +17,21 @@ fun ByteArray.readLong(index: Int = 0): Long {
         .or(get(index + 6).toLong().and(0xff).shl(8))
         .or(get(index + 7).toLong().and(0xff))
 }
+
+fun ByteArray.write(index: Int = 0, value: Int) {
+    set(index, value.shr(24).toByte())
+    set(index + 1, value.shr(16).toByte())
+    set(index + 2, value.shr(8).toByte())
+    set(index + 3, value.toByte())
+}
+
+fun ByteArray.write(index: Int = 0, value: Long) {
+    set(index, value.shr(56).toByte())
+    set(index + 1, value.shr(48).toByte())
+    set(index + 2, value.shr(40).toByte())
+    set(index + 3, value.shr(32).toByte())
+    set(index + 4, value.shr(24).toByte())
+    set(index + 5, value.shr(16).toByte())
+    set(index + 6, value.shr(8).toByte())
+    set(index + 7, value.toByte())
+}
