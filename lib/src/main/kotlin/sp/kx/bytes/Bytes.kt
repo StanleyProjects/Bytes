@@ -1,5 +1,7 @@
 package sp.kx.bytes
 
+import java.util.UUID
+
 fun ByteArray.readInt(index: Int = 0): Int {
     return get(index).toInt().and(0xff).shl(24)
         .or(get(index + 1).toInt().and(0xff).shl(16))
@@ -18,6 +20,10 @@ fun ByteArray.readLong(index: Int = 0): Long {
         .or(get(index + 7).toLong().and(0xff))
 }
 
+fun ByteArray.readUUID(index: Int = 0): UUID {
+    return UUID(readLong(index = index), readLong(index = index + 8))
+}
+
 fun ByteArray.write(index: Int = 0, value: Int) {
     set(index, value.shr(24).toByte())
     set(index + 1, value.shr(16).toByte())
@@ -34,4 +40,9 @@ fun ByteArray.write(index: Int = 0, value: Long) {
     set(index + 5, value.shr(16).toByte())
     set(index + 6, value.shr(8).toByte())
     set(index + 7, value.toByte())
+}
+
+fun ByteArray.write(index: Int = 0, value: UUID) {
+    write(index = index, value = value.mostSignificantBits)
+    write(index = index + 8, value = value.leastSignificantBits)
 }
