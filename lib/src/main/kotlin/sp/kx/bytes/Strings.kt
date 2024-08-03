@@ -3,7 +3,7 @@ package sp.kx.bytes
 import java.util.Locale
 
 fun Int.toHEX(locale: Locale = Locale.US): String {
-    return String.format(locale, "%02x", this and 0xff)
+    return String.format(locale, "%02x", and(0xff))
 }
 
 fun ByteArray.toHEX(locale: Locale = Locale.US): String {
