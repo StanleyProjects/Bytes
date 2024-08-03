@@ -63,6 +63,19 @@ fun ByteArray.readUUID(index: Int = 0): UUID {
     return UUID(readLong(index = index), readLong(index = index + 8))
 }
 
+/**
+ * The function converts [value]: [Int] into 4 [Byte]s of [this]: [ByteArray] starting at [index].
+ *
+ * Usage:
+ * ```
+ * val bytes = ByteArray(4)
+ * val expected: Int = 287628776
+ * bytes.write(value = expected)
+ * assertEquals(expected, bytes.readInt())
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 @Suppress("MagicNumber")
 fun ByteArray.write(index: Int = 0, value: Int) {
     set(index, value.shr(24).toByte())
@@ -71,6 +84,19 @@ fun ByteArray.write(index: Int = 0, value: Int) {
     set(index + 3, value.toByte())
 }
 
+/**
+ * The function converts [value]: [Long] into 8 [Byte]s of [this]: [ByteArray] starting at [index].
+ *
+ * Usage:
+ * ```
+ * val bytes = ByteArray(8)
+ * val expected: Long = 567211377871434445
+ * bytes.write(value = expected)
+ * assertEquals(expected, bytes.readLong())
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 @Suppress("MagicNumber")
 fun ByteArray.write(index: Int = 0, value: Long) {
     set(index, value.shr(56).toByte())
@@ -83,6 +109,19 @@ fun ByteArray.write(index: Int = 0, value: Long) {
     set(index + 7, value.toByte())
 }
 
+/**
+ * The function converts [value]: [UUID] into 16 [Byte]s of [this]: [ByteArray] starting at [index].
+ *
+ * Usage:
+ * ```
+ * val bytes = ByteArray(16)
+ * val expected = UUID.fromString("014d97a8-897e-8d2c-09b6-833da23617cf")
+ * bytes.write(value = expected)
+ * assertEquals(expected, bytes.readUUID())
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 @Suppress("MagicNumber")
 fun ByteArray.write(index: Int = 0, value: UUID) {
     write(index = index, value = value.mostSignificantBits)
