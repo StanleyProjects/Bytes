@@ -1,5 +1,6 @@
 package sp.kx.bytes
 
+@Suppress("MagicNumber", "LongParameterList")
 fun toLong(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte, b7: Byte): Long {
     return b0.toLong().and(0xff).shl(56)
         .or(b1.toLong().and(0xff).shl(48))

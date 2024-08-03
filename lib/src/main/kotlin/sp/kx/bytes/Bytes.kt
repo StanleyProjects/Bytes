@@ -2,6 +2,7 @@ package sp.kx.bytes
 
 import java.util.UUID
 
+@Suppress("MagicNumber")
 fun ByteArray.readInt(index: Int = 0): Int {
     return get(index).toInt().and(0xff).shl(24)
         .or(get(index + 1).toInt().and(0xff).shl(16))
@@ -9,6 +10,7 @@ fun ByteArray.readInt(index: Int = 0): Int {
         .or(get(index + 3).toInt().and(0xff))
 }
 
+@Suppress("MagicNumber")
 fun ByteArray.readLong(index: Int = 0): Long {
     return get(index).toLong().and(0xff).shl(56)
         .or(get(index + 1).toLong().and(0xff).shl(48))
@@ -20,10 +22,12 @@ fun ByteArray.readLong(index: Int = 0): Long {
         .or(get(index + 7).toLong().and(0xff))
 }
 
+@Suppress("MagicNumber")
 fun ByteArray.readUUID(index: Int = 0): UUID {
     return UUID(readLong(index = index), readLong(index = index + 8))
 }
 
+@Suppress("MagicNumber")
 fun ByteArray.write(index: Int = 0, value: Int) {
     set(index, value.shr(24).toByte())
     set(index + 1, value.shr(16).toByte())
@@ -31,6 +35,7 @@ fun ByteArray.write(index: Int = 0, value: Int) {
     set(index + 3, value.toByte())
 }
 
+@Suppress("MagicNumber")
 fun ByteArray.write(index: Int = 0, value: Long) {
     set(index, value.shr(56).toByte())
     set(index + 1, value.shr(48).toByte())
@@ -42,6 +47,7 @@ fun ByteArray.write(index: Int = 0, value: Long) {
     set(index + 7, value.toByte())
 }
 
+@Suppress("MagicNumber")
 fun ByteArray.write(index: Int = 0, value: UUID) {
     write(index = index, value = value.mostSignificantBits)
     write(index = index + 8, value = value.leastSignificantBits)
