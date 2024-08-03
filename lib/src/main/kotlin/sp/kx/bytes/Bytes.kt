@@ -2,6 +2,18 @@ package sp.kx.bytes
 
 import java.util.UUID
 
+/**
+ * The function converts 4 [Byte]s of [this] array starting at [index] into an [Int].
+ *
+ * Usage:
+ * ```
+ * val bytes = byteArrayOf(0x11, 0x24, 0xdd, 0xe8)
+ * val expected: Int = 287628776
+ * assertEquals(expected, bytes.readInt())
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 @Suppress("MagicNumber")
 fun ByteArray.readInt(index: Int = 0): Int {
     return get(index).toInt().and(0xff).shl(24)
@@ -10,6 +22,18 @@ fun ByteArray.readInt(index: Int = 0): Int {
         .or(get(index + 3).toInt().and(0xff))
 }
 
+/**
+ * The function converts 8 [Byte]s of [this] array starting at [index] into an [Long].
+ *
+ * Usage:
+ * ```
+ * val bytes = byteArrayOf(0x07, 0xdf, 0x23, 0xbe, 0x32, 0x96, 0x32, 0xcd)
+ * val expected: Long = 567211377871434445
+ * assertEquals(expected, bytes.readLong())
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 @Suppress("MagicNumber")
 fun ByteArray.readLong(index: Int = 0): Long {
     return get(index).toLong().and(0xff).shl(56)
@@ -22,6 +46,18 @@ fun ByteArray.readLong(index: Int = 0): Long {
         .or(get(index + 7).toLong().and(0xff))
 }
 
+/**
+ * The function converts 16 [Byte]s of [this] array starting at [index] into an [UUID] (as [UUID.mostSigBits] and [UUID.leastSigBits]).
+ *
+ * Usage:
+ * ```
+ * val bytes = byteArrayOf(0x01, 0x4d, 0x97, 0xa8, 0x89, 0x7e, 0x8d, 0x2c, 0x09, 0xb6, 0x83, 0x3d, 0xa2, 0x36, 0x17, 0xcf)
+ * val expected = UUID.fromString("014d97a8-897e-8d2c-09b6-833da23617cf")
+ * assertEquals(expected, bytes.readUUID())
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 @Suppress("MagicNumber")
 fun ByteArray.readUUID(index: Int = 0): UUID {
     return UUID(readLong(index = index), readLong(index = index + 8))
