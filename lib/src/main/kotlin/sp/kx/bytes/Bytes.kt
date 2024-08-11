@@ -128,6 +128,7 @@ fun ByteArray.write(index: Int = 0, value: UUID) {
     write(index = index + 8, value = value.leastSignificantBits)
 }
 
+@Suppress("MagicNumber")
 fun UUID.toByteArray(): ByteArray {
     val bytes = ByteArray(16)
     bytes.write(value = this)

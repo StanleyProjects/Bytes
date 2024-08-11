@@ -24,6 +24,7 @@ fun toLong(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte,
         .or(b7.toLong().and(0xff))
 }
 
+@Suppress("MagicNumber")
 fun Long.toByteArray(): ByteArray {
     val bytes = ByteArray(8)
     bytes.write(value = this)

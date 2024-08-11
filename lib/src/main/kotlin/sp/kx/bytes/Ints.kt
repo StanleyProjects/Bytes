@@ -20,6 +20,7 @@ fun toInt(b0: Byte, b1: Byte, b2: Byte, b3: Byte): Int {
         .or(b3.toInt().and(0xff))
 }
 
+@Suppress("MagicNumber")
 fun Int.toByteArray(): ByteArray {
     val bytes = ByteArray(4)
     bytes.write(value = this)
