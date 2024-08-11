@@ -166,4 +166,27 @@ internal class BytesTest {
         assertEquals(0x88.toByte(), bytes[15])
         assertEquals(0xd7.toByte(), bytes[16])
     }
+
+    @Test
+    fun toByteArrayTest() {
+        val id = UUID.fromString("9fe2ec8c-3ecb-4b29-b622-4f23a981d8fb")
+        val bytes = id.toByteArray()
+        assertEquals(16, bytes.size)
+        assertEquals(0x9f.toByte(), bytes[0])
+        assertEquals(0xe2.toByte(), bytes[1])
+        assertEquals(0xec.toByte(), bytes[2])
+        assertEquals(0x8c.toByte(), bytes[3])
+        assertEquals(0x3e.toByte(), bytes[4])
+        assertEquals(0xcb.toByte(), bytes[5])
+        assertEquals(0x4b.toByte(), bytes[6])
+        assertEquals(0x29.toByte(), bytes[7])
+        assertEquals(0xb6.toByte(), bytes[8])
+        assertEquals(0x22.toByte(), bytes[9])
+        assertEquals(0x4f.toByte(), bytes[10])
+        assertEquals(0x23.toByte(), bytes[11])
+        assertEquals(0xa9.toByte(), bytes[12])
+        assertEquals(0x81.toByte(), bytes[13])
+        assertEquals(0xd8.toByte(), bytes[14])
+        assertEquals(0xfb.toByte(), bytes[15])
+    }
 }

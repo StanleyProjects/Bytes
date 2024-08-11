@@ -18,4 +18,19 @@ internal class LongsTest {
         val actual: Long = toLong(b0 = b0, b1 = b1, b2 = b2, b3 = b3, b4 = b4, b5 = b5, b6 = b6, b7 = b7)
         assertEquals(expected, actual)
     }
+
+    @Test
+    fun toByteArrayTest() {
+        val number: Long = 0x0b323f24fdb0b21b
+        val bytes = number.toByteArray()
+        assertEquals(8, bytes.size)
+        assertEquals(0x0b.toByte(), bytes[0])
+        assertEquals(0x32.toByte(), bytes[1])
+        assertEquals(0x3f.toByte(), bytes[2])
+        assertEquals(0x24.toByte(), bytes[3])
+        assertEquals(0xfd.toByte(), bytes[4])
+        assertEquals(0xb0.toByte(), bytes[5])
+        assertEquals(0xb2.toByte(), bytes[6])
+        assertEquals(0x1b.toByte(), bytes[7])
+    }
 }
