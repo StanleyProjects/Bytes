@@ -23,3 +23,9 @@ fun toLong(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte,
         .or(b6.toLong().and(0xff).shl(8))
         .or(b7.toLong().and(0xff))
 }
+
+fun Long.toByteArray(): ByteArray {
+    val bytes = ByteArray(8)
+    bytes.write(value = this)
+    return bytes
+}

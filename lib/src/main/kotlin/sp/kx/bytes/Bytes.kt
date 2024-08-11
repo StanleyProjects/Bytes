@@ -127,3 +127,9 @@ fun ByteArray.write(index: Int = 0, value: UUID) {
     write(index = index, value = value.mostSignificantBits)
     write(index = index + 8, value = value.leastSignificantBits)
 }
+
+fun UUID.toByteArray(): ByteArray {
+    val bytes = ByteArray(16)
+    bytes.write(value = this)
+    return bytes
+}
