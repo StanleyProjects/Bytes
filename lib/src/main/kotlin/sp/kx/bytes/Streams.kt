@@ -4,6 +4,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.util.UUID
 
+@Suppress("MagicNumber")
 fun OutputStream.writeBytes(value: Int) {
     write(value.shr(24))
     write(value.shr(16))
@@ -11,6 +12,7 @@ fun OutputStream.writeBytes(value: Int) {
     write(value)
 }
 
+@Suppress("MagicNumber")
 fun InputStream.readInt(): Int {
     return read().and(0xff).shl(24)
         .or(read().and(0xff).shl(16))
@@ -18,6 +20,7 @@ fun InputStream.readInt(): Int {
         .or(read().and(0xff))
 }
 
+@Suppress("MagicNumber")
 fun OutputStream.writeBytes(value: Long) {
     write(value.shr(56).toInt())
     write(value.shr(48).toInt())
@@ -29,6 +32,7 @@ fun OutputStream.writeBytes(value: Long) {
     write(value.toInt())
 }
 
+@Suppress("MagicNumber")
 fun InputStream.readLong(): Long {
     return read().toLong().and(0xff).shl(56)
         .or(read().toLong().and(0xff).shl(48))
