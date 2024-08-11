@@ -49,7 +49,8 @@ fun InputStream.readUUID(): UUID {
     return UUID(readLong(), readLong())
 }
 
-fun InputStream.readBytes(size: Int, bytes: ByteArray = ByteArray(size), index: Int = 0): ByteArray {
-    read(bytes, index, size)
+fun InputStream.readBytes(size: Int): ByteArray {
+    val bytes = ByteArray(size)
+    read(bytes)
     return bytes
 }
