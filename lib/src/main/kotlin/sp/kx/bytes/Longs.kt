@@ -23,3 +23,22 @@ fun toLong(b0: Byte, b1: Byte, b2: Byte, b3: Byte, b4: Byte, b5: Byte, b6: Byte,
         .or(b6.toLong().and(0xff).shl(8))
         .or(b7.toLong().and(0xff))
 }
+
+/**
+ * The function converts [this]: [Long] into 8 [Byte]s and puts them into a [ByteArray].
+ *
+ * Usage:
+ * ```
+ * val expected: Long = 0x0b323f24fdb0b21b
+ * val bytes = expected.toByteArray()
+ * assertEquals(expected, bytes.readLong())
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.2.1
+ */
+@Suppress("MagicNumber")
+fun Long.toByteArray(): ByteArray {
+    val bytes = ByteArray(8)
+    bytes.write(value = this)
+    return bytes
+}

@@ -19,3 +19,22 @@ fun toInt(b0: Byte, b1: Byte, b2: Byte, b3: Byte): Int {
         .or(b2.toInt().and(0xff).shl(8))
         .or(b3.toInt().and(0xff))
 }
+
+/**
+ * The function converts [this]: [Int] into 4 [Byte]s and puts them into a [ByteArray].
+ *
+ * Usage:
+ * ```
+ * val expected: Int = 0x0695e078
+ * val bytes = expected.toByteArray()
+ * assertEquals(expected, bytes.readInt())
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.2.1
+ */
+@Suppress("MagicNumber")
+fun Int.toByteArray(): ByteArray {
+    val bytes = ByteArray(4)
+    bytes.write(value = this)
+    return bytes
+}
