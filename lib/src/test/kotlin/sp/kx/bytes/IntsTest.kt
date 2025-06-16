@@ -17,7 +17,7 @@ internal class IntsTest {
 
     @Test
     fun toInt2Test() {
-        val expected: Int = 12345
+        val expected: Int = 0x3039
         val b0: Byte = 0x30
         val b1: Byte = 0x39
         val actual: Int = toInt(b0 = b0, b1 = b1)
@@ -25,13 +25,11 @@ internal class IntsTest {
     }
 
     @Test
-    fun fooTest() {
-        val b1: Byte = 0xef.toByte()
-        val b2: Byte = 0x0a.toByte()
-        val expected: Int = 2799
-//        val expected: Int = 0xef0a
-//        val actual = b1.toInt().and(0xff) or b2.toInt().and(0xff).shl(8)
-        val actual = b1.toInt().and(0xff).shl(8).or(b2.toInt().and(0xff))
+    fun toInt2ReversedTest() {
+        val expected: Int = 0x0aef
+        val b0: Byte = 0xef.toByte()
+        val b1: Byte = 0x0a.toByte()
+        val actual: Int = toInt(b1, b0)
         assertEquals(expected, actual)
     }
 
