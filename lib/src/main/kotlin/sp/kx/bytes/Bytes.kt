@@ -148,5 +148,6 @@ fun UUID.toByteArray(): ByteArray {
 }
 
 fun Byte.test(index: Int): Boolean {
-    TODO("Byte:test($this, $index)")
+    require(index in 0..7) { "Unexpected index $index!" }
+    return toInt().test(index = index)
 }

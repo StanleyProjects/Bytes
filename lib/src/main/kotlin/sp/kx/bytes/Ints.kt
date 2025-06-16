@@ -43,3 +43,7 @@ fun Int.toByteArray(): ByteArray {
     bytes.write(value = this)
     return bytes
 }
+
+internal fun Int.test(index: Int): Boolean {
+    return and(1.shl(index)) != 0
+}
