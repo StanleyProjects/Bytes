@@ -20,6 +20,12 @@ fun toInt(b0: Byte, b1: Byte, b2: Byte, b3: Byte): Int {
         .or(b3.toInt().and(0xff))
 }
 
+fun toInt(b0: Byte, b1: Byte): Int {
+    TODO("toInt($b0, $b1)")
+    return b0.toInt().and(0xff).shl(8)
+        .or(b1.toInt().and(0xff))
+}
+
 /**
  * The function converts [this]: [Int] into 4 [Byte]s and puts them into a [ByteArray].
  *
