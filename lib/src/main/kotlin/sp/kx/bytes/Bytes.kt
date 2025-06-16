@@ -146,3 +146,7 @@ fun UUID.toByteArray(): ByteArray {
     bytes.write(value = this)
     return bytes
 }
+
+fun Byte.test(index: Int): Boolean {
+    TODO("Byte:test($this, $index)")
+}

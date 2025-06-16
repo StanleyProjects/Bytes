@@ -1,7 +1,9 @@
 package sp.kx.bytes
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.util.UUID
 
 internal class BytesTest {
@@ -188,5 +190,19 @@ internal class BytesTest {
         assertEquals(0x81.toByte(), bytes[13])
         assertEquals(0xd8.toByte(), bytes[14])
         assertEquals(0xfb.toByte(), bytes[15])
+    }
+
+    @Test
+    fun bitsTest() {
+        val byte: Byte = 0x01
+        assertTrue(byte.test(index = 0))
+    }
+
+    @Test
+    fun bitsErrorsTest() {
+        val byte: Byte = 0x01
+        assertThrows<IllegalArgumentException> {
+            assertTrue(byte.test(index = -1))
+        }
     }
 }
