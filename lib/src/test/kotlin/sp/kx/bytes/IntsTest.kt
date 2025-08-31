@@ -5,13 +5,31 @@ import org.junit.jupiter.api.Test
 
 internal class IntsTest {
     @Test
-    fun toIntTest() {
+    fun toInt4Test() {
         val expected: Int = 616889394
         val b0: Byte = 0x24.toByte()
         val b1: Byte = 0xc4.toByte()
         val b2: Byte = 0xfc.toByte()
         val b3: Byte = 0x32.toByte()
         val actual: Int = toInt(b0 = b0, b1 = b1, b2 = b2, b3 = b3)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun toInt2Test() {
+        val expected: Int = 0x3039
+        val b0: Byte = 0x30
+        val b1: Byte = 0x39
+        val actual: Int = toInt(b0 = b0, b1 = b1)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun toInt2ReversedTest() {
+        val expected: Int = 0x0aef
+        val b0: Byte = 0xef.toByte()
+        val b1: Byte = 0x0a.toByte()
+        val actual: Int = toInt(b1, b0)
         assertEquals(expected, actual)
     }
 
@@ -24,5 +42,48 @@ internal class IntsTest {
         assertEquals(0x95.toByte(), bytes[1])
         assertEquals(0xe0.toByte(), bytes[2])
         assertEquals(0x78.toByte(), bytes[3])
+    }
+
+    @Test
+    fun bitsTestTest() {
+        listOf(
+            Triple(0b00000100, 0, false),
+            Triple(0b00000010, 0, false),
+            Triple(0b00000000, 0, false),
+            Triple(0b11111110, 0, false),
+            Triple(0b11111101, 1, false),
+            Triple(0b11111011, 2, false),
+            Triple(0b11110111, 3, false),
+            Triple(0b11101111, 4, false),
+            Triple(0b11011111, 5, false),
+            Triple(0b10111111, 6, false),
+            Triple(0b01111111, 7, false),
+            Triple(0b00000001, 0, true),
+            Triple(0b00000010, 1, true),
+            Triple(0b00000100, 2, true),
+            Triple(0b00000110, 2, true),
+            Triple(0b00000111, 2, true),
+            Triple(0b00001000, 3, true),
+            Triple(0b00011000, 3, true),
+            Triple(0b00111000, 3, true),
+            Triple(0b01111000, 3, true),
+            Triple(0b11111000, 3, true),
+            Triple(0b00010000, 4, true),
+            Triple(0b00100000, 5, true),
+            Triple(0b01000000, 6, true),
+            Triple(0b10000000, 7, true),
+            Triple(0b00000000_00000000_00000001, 0, true),
+            Triple(0b00000000_00000001_00000000, 8, true),
+            Triple(0b00000001_00000000_00000000, 16, true),
+        ).forEach { (number: Int, index, expected) ->
+            val actual = number.test(index = index)
+            val message = """
+                number: $number
+                binary: ${String.format("%032d", Integer.toBinaryString(number).toLong())}
+                index: $index
+                result: ${number.and(1.shl(index))}
+            """.trimIndent()
+            assertEquals(expected, actual, message)
+        }
     }
 }

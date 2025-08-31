@@ -1,7 +1,9 @@
 package sp.kx.bytes
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.util.UUID
 
 internal class BytesTest {
@@ -188,5 +190,58 @@ internal class BytesTest {
         assertEquals(0x81.toByte(), bytes[13])
         assertEquals(0xd8.toByte(), bytes[14])
         assertEquals(0xfb.toByte(), bytes[15])
+    }
+
+    @Test
+    fun bitsTest() {
+        listOf(
+            Triple(0b00000100, 0, false),
+            Triple(0b00000010, 0, false),
+            Triple(0b00000000, 0, false),
+            Triple(0b11111110, 0, false),
+            Triple(0b11111101, 1, false),
+            Triple(0b11111011, 2, false),
+            Triple(0b11110111, 3, false),
+            Triple(0b11101111, 4, false),
+            Triple(0b11011111, 5, false),
+            Triple(0b10111111, 6, false),
+            Triple(0b01111111, 7, false),
+            Triple(0b00000001, 0, true),
+            Triple(0b00000010, 1, true),
+            Triple(0b00000100, 2, true),
+            Triple(0b00000110, 2, true),
+            Triple(0b00000111, 2, true),
+            Triple(0b00001000, 3, true),
+            Triple(0b00011000, 3, true),
+            Triple(0b00111000, 3, true),
+            Triple(0b01111000, 3, true),
+            Triple(0b11111000, 3, true),
+            Triple(0b00010000, 4, true),
+            Triple(0b00100000, 5, true),
+            Triple(0b01000000, 6, true),
+            Triple(0b10000000, 7, true),
+        ).forEach { (number, index, expected) ->
+            val byte = number.toByte()
+            val actual = byte.test(index = index)
+            val message = """
+                byte: $byte
+                binary: ${String.format("%08d", Integer.toBinaryString(number).toInt())}
+                index: $index
+                result: ${number.and(1.shl(index))}
+            """.trimIndent()
+            assertEquals(expected, actual, message)
+        }
+    }
+
+    @Test
+    fun bitsErrorsTest() {
+        val byte: Byte = 1
+        listOf(-42, -1, 8, 42).forEach { index ->
+            val error = assertThrows<IllegalArgumentException> {
+                assertTrue(byte.test(index = index))
+            }
+            val expected = "Unexpected index $index!"
+            assertEquals(expected, error.message)
+        }
     }
 }

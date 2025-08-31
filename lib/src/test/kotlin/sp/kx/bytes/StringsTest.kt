@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class StringsTest {
     @Test
-    fun toHEXIntTest() {
+    fun hexIntTest() {
         mapOf(
             0 to "00",
             10 to "0a",
@@ -13,18 +13,18 @@ internal class StringsTest {
             121 to "79",
             239 to "ef",
         ).forEach { (number, expected) ->
-            assertEquals(expected, number.toHEX())
+            assertEquals(expected, number.hex())
         }
     }
 
     @Test
-    fun toHEXTest() {
+    fun hexTest() {
         mapOf(
             byteArrayOf() to "",
             byteArrayOf(0) to "00",
             byteArrayOf(0x0a, 0x16, 0xe2.toByte(), 0x36) to "0a16e236",
         ).forEach { (bytes, expected) ->
-            assertEquals(expected, bytes.toHEX())
+            assertEquals(expected, bytes.hex())
         }
     }
 }

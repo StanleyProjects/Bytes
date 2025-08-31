@@ -47,11 +47,12 @@ fun ByteArray.readLong(index: Int = 0): Long {
 }
 
 /**
- * The function converts 16 [Byte]s of [this] array starting at [index] into an [UUID] (as [UUID.mostSigBits] and [UUID.leastSigBits]).
+ * The function converts 16 [Byte]s of [this] array starting at [index]
+ * into an [UUID] (as [UUID.mostSigBits] and [UUID.leastSigBits]).
  *
  * Usage:
  * ```
- * val bytes = byteArrayOf(0x01, 0x4d, 0x97, 0xa8, 0x89, 0x7e, 0x8d, 0x2c, 0x09, 0xb6, 0x83, 0x3d, 0xa2, 0x36, 0x17, 0xcf)
+ * val bytes = byteArrayOf(0x01,0x4d,0x97,0xa8,0x89,0x7e,0x8d,0x2c,0x09,0xb6,0x83,0x3d,0xa2,0x36,0x17,0xcf)
  * val expected = UUID.fromString("014d97a8-897e-8d2c-09b6-833da23617cf")
  * assertEquals(expected, bytes.readUUID())
  * ```
@@ -145,4 +146,22 @@ fun UUID.toByteArray(): ByteArray {
     val bytes = ByteArray(16)
     bytes.write(value = this)
     return bytes
+}
+
+/**
+ * The function checks that at [index] the bit is equal to `1`.
+ *
+ * Usage:
+ * ```
+ * val number = 0b00000001.toByte()
+ * assertTrue(number.test(index = 0))
+ * assertFalse(number.test(index = 1))
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.4.0
+ */
+@Suppress("MagicNumber")
+fun Byte.test(index: Int): Boolean {
+    require(index in 0..7) { "Unexpected index $index!" }
+    return toInt().unsafeTest(index = index)
 }
