@@ -45,6 +45,18 @@ fun Int.toByteArray(): ByteArray {
     return bytes
 }
 
+/**
+ * The function converts [this]: [UUID] into 16 [Byte]s and puts them into a [ByteArray].
+ *
+ * Usage:
+ * ```
+ * val expected = UUID.fromString("9fe2ec8c-3ecb-4b29-b622-4f23a981d8fb")
+ * val bytes = expected.toByteArray()
+ * assertEquals(expected, bytes.readUUID())
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.2.1
+ */
 @Suppress("MagicNumber")
 fun Int.test(index: Int): Boolean {
     require(index in 0..31) { "Unexpected index $index!" }
