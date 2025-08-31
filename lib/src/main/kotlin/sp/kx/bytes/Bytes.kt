@@ -149,5 +149,5 @@ fun UUID.toByteArray(): ByteArray {
 
 fun Byte.test(index: Int): Boolean {
     require(index in 0..7) { "Unexpected index $index!" }
-    return toInt().test(index = index)
+    return toInt().unsafeTest(index = index)
 }

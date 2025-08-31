@@ -44,6 +44,7 @@ fun Int.toByteArray(): ByteArray {
     return bytes
 }
 
-internal fun Int.test(index: Int): Boolean {
-    return and(1.shl(index)) != 0
+fun Int.test(index: Int): Boolean {
+    require(index in 0..31) { "Unexpected index $index!" }
+    return unsafeTest(index = index)
 }
