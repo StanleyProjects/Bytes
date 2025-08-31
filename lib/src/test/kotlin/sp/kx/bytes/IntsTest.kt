@@ -43,4 +43,47 @@ internal class IntsTest {
         assertEquals(0xe0.toByte(), bytes[2])
         assertEquals(0x78.toByte(), bytes[3])
     }
+
+    @Test
+    fun bitsTestTest() {
+        listOf(
+            Triple(0b00000100, 0, false),
+            Triple(0b00000010, 0, false),
+            Triple(0b00000000, 0, false),
+            Triple(0b11111110, 0, false),
+            Triple(0b11111101, 1, false),
+            Triple(0b11111011, 2, false),
+            Triple(0b11110111, 3, false),
+            Triple(0b11101111, 4, false),
+            Triple(0b11011111, 5, false),
+            Triple(0b10111111, 6, false),
+            Triple(0b01111111, 7, false),
+            Triple(0b00000001, 0, true),
+            Triple(0b00000010, 1, true),
+            Triple(0b00000100, 2, true),
+            Triple(0b00000110, 2, true),
+            Triple(0b00000111, 2, true),
+            Triple(0b00001000, 3, true),
+            Triple(0b00011000, 3, true),
+            Triple(0b00111000, 3, true),
+            Triple(0b01111000, 3, true),
+            Triple(0b11111000, 3, true),
+            Triple(0b00010000, 4, true),
+            Triple(0b00100000, 5, true),
+            Triple(0b01000000, 6, true),
+            Triple(0b10000000, 7, true),
+            Triple(0b00000000_00000000_00000001, 0, true),
+            Triple(0b00000000_00000001_00000000, 8, true),
+            Triple(0b00000001_00000000_00000000, 16, true),
+        ).forEach { (number: Int, index, expected) ->
+            val actual = number.test(index = index)
+            val message = """
+                number: $number
+                binary: ${String.format("%032d", Integer.toBinaryString(number).toLong())}
+                index: $index
+                result: ${number.and(1.shl(index))}
+            """.trimIndent()
+            assertEquals(expected, actual, message)
+        }
+    }
 }
