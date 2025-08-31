@@ -20,6 +20,18 @@ fun toInt(b0: Byte, b1: Byte, b2: Byte, b3: Byte): Int {
         .or(b3.toInt().and(0xff))
 }
 
+/**
+ * The function converts 2 [Byte]s into an [Int].
+ *
+ * Usage:
+ * ```
+ * val expected: Int = 0x3039
+ * val actual = toInt(0x30, 0x39)
+ * assertEquals(expected, actual)
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.4.0
+ */
 @Suppress("MagicNumber")
 fun toInt(b0: Byte, b1: Byte): Int {
     return b0.toInt().and(0xff).shl(8)
@@ -46,16 +58,16 @@ fun Int.toByteArray(): ByteArray {
 }
 
 /**
- * The function converts [this]: [UUID] into 16 [Byte]s and puts them into a [ByteArray].
+ * The function checks that at [index] the bit is equal to `1`.
  *
  * Usage:
  * ```
- * val expected = UUID.fromString("9fe2ec8c-3ecb-4b29-b622-4f23a981d8fb")
- * val bytes = expected.toByteArray()
- * assertEquals(expected, bytes.readUUID())
+ * val number = 0b00000001
+ * assertTrue(number.test(index = 0))
+ * assertFalse(number.test(index = 1))
  * ```
  * @author [Stanley Wintergreen](https://github.com/kepocnhh)
- * @since 0.2.1
+ * @since 0.4.0
  */
 @Suppress("MagicNumber")
 fun Int.test(index: Int): Boolean {

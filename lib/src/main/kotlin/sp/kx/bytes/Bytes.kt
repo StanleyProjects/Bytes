@@ -148,6 +148,18 @@ fun UUID.toByteArray(): ByteArray {
     return bytes
 }
 
+/**
+ * The function checks that at [index] the bit is equal to `1`.
+ *
+ * Usage:
+ * ```
+ * val number = 0b00000001.toByte()
+ * assertTrue(number.test(index = 0))
+ * assertFalse(number.test(index = 1))
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.4.0
+ */
 @Suppress("MagicNumber")
 fun Byte.test(index: Int): Boolean {
     require(index in 0..7) { "Unexpected index $index!" }
