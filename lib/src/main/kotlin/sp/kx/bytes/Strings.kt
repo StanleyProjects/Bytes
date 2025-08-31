@@ -14,6 +14,7 @@ import java.util.Locale
  * @author [Stanley Wintergreen](https://github.com/kepocnhh)
  * @since 0.1.0
  */
+@Suppress("MagicNumber")
 fun Int.hex(locale: Locale = Locale.US): String {
     return String.format(locale, "%02x", and(0xff))
 }

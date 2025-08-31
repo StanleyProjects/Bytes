@@ -20,6 +20,7 @@ fun toInt(b0: Byte, b1: Byte, b2: Byte, b3: Byte): Int {
         .or(b3.toInt().and(0xff))
 }
 
+@Suppress("MagicNumber")
 fun toInt(b0: Byte, b1: Byte): Int {
     return b0.toInt().and(0xff).shl(8)
         .or(b1.toInt().and(0xff))
@@ -44,6 +45,7 @@ fun Int.toByteArray(): ByteArray {
     return bytes
 }
 
+@Suppress("MagicNumber")
 fun Int.test(index: Int): Boolean {
     require(index in 0..31) { "Unexpected index $index!" }
     return unsafeTest(index = index)
