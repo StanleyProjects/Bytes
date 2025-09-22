@@ -50,7 +50,7 @@ dependencies {
 
 ## Unstable
 
-> GitHub [0.4.0u-SNAPSHOT](https://github.com/StanleyProjects/Bytes/releases/tag/0.4.0u-SNAPSHOT) release
+> GitHub [0.4.1u-SNAPSHOT](https://github.com/StanleyProjects/Bytes/releases/tag/0.4.1u-SNAPSHOT) release
 >
 > Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Bytes/maven-metadata.xml)
 
@@ -66,7 +66,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Bytes:0.4.0u-SNAPSHOT")
+    implementation("com.github.kepocnhh:Bytes:0.4.1u-SNAPSHOT")
 }
 ```
 
