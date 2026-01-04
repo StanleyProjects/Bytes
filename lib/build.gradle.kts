@@ -66,7 +66,7 @@ fun Test.getExecutionData(): File {
         .asFile("$name.exec")
 }
 
-val taskUnitTest = task<Test>("checkUnitTest") {
+val taskUnitTest = tasks.register<Test>("checkUnitTest") {
     useJUnitPlatform()
     testClassesDirs = sourceSets.test.get().output.classesDirs
     classpath = sourceSets.test.get().runtimeClasspath
@@ -74,11 +74,11 @@ val taskUnitTest = task<Test>("checkUnitTest") {
     doLast {
         getExecutionData().eff()
     }
-}
+}.get()
 
 jacoco.toolVersion = Version.jacoco
 
-val taskCoverageReport = task<JacocoReport>("assembleCoverageReport") {
+val taskCoverageReport = tasks.register<JacocoReport>("assembleCoverageReport") {
     dependsOn(taskUnitTest)
     reports {
         csv.required = false
@@ -94,9 +94,9 @@ val taskCoverageReport = task<JacocoReport>("assembleCoverageReport") {
             .eff("index.html")
         println("Coverage report: ${report.absolutePath}")
     }
-}
+}.get()
 
-task<JacocoCoverageVerification>("checkCoverage") {
+tasks.register<JacocoCoverageVerification>("checkCoverage") {
     dependsOn(taskCoverageReport)
     violationRules {
         rule {
@@ -109,7 +109,7 @@ task<JacocoCoverageVerification>("checkCoverage") {
     executionData(taskCoverageReport.executionData)
 }
 
-task<Detekt>("checkCodeQuality") {
+tasks.register<Detekt>("checkCodeQuality") {
     buildUponDefaultConfig = true
     allRules = true
     jvmTarget = Version.jvmTarget
@@ -137,7 +137,7 @@ task<Detekt>("checkCodeQuality") {
     }
 }
 
-task<Detekt>("checkDocs") {
+tasks.register<Detekt>("checkDocs") {
     buildUponDefaultConfig = false
     allRules = false
     jvmTarget = Version.jvmTarget

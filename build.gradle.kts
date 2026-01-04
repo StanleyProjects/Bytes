@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-task<Delete>("clean") {
+tasks.register<Delete>("clean") {
     delete = setOf(buildDir(), buildSrc.buildDir())
 }
 
@@ -40,7 +40,7 @@ dependencies {
     }
 }
 
-task<JavaExec>("checkCodeStyle") {
+tasks.register<JavaExec>("checkCodeStyle") {
     classpath = ktlint
     mainClass = "com.pinterest.ktlint.Main"
     val reporter = "html"
