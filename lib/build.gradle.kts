@@ -36,6 +36,10 @@ plugins {
     id("org.jetbrains.dokka") version Version.dokka
 }
 
+tasks.getByName<JavaCompile>("compileJava") {
+    targetCompatibility = Version.jvmTarget
+}
+
 val compileKotlinTask = tasks.getByName<KotlinCompile>("compileKotlin") {
     kotlinOptions {
         jvmTarget = Version.jvmTarget
