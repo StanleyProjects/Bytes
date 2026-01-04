@@ -9,12 +9,13 @@ import java.util.Locale
  * ```
  * val number: Int = 239
  * val expected = "ef"
- * assertEquals(expected, number.toHEX())
+ * assertEquals(expected, number.hex())
  * ```
  * @author [Stanley Wintergreen](https://github.com/kepocnhh)
  * @since 0.1.0
  */
-fun Int.toHEX(locale: Locale = Locale.US): String {
+@Suppress("MagicNumber")
+fun Int.hex(locale: Locale = Locale.US): String {
     return String.format(locale, "%02x", and(0xff))
 }
 
@@ -25,17 +26,17 @@ fun Int.toHEX(locale: Locale = Locale.US): String {
  * ```
  * val bytes = byteArrayOf(0x0a, 0x16, 0xe2, 0x36)
  * val expected = "0a16e236"
- * assertEquals(expected, bytes.toHEX())
+ * assertEquals(expected, bytes.hex())
  * ```
  * @author [Stanley Wintergreen](https://github.com/kepocnhh)
  * @since 0.1.0
  */
-fun ByteArray.toHEX(locale: Locale = Locale.US): String {
+fun ByteArray.hex(locale: Locale = Locale.US): String {
     if (isEmpty()) return ""
     val builder = StringBuilder()
-    builder.append(get(0).toInt().toHEX(locale))
+    builder.append(get(0).toInt().hex(locale))
     for (i in 1 until size) {
-        builder.append(get(i).toInt().toHEX(locale))
+        builder.append(get(i).toInt().hex(locale))
     }
     return builder.toString()
 }
