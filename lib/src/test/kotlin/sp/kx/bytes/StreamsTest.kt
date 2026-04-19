@@ -169,12 +169,17 @@ internal class StreamsTest {
 
     @Test
     fun readUntilTest() {
-        val bytes = byteArrayOf(0x01, 0x02, 0x02, 0x03, 0x03, 0x03)
-        check(bytes.size == 6)
-        val stream = ByteArrayInputStream(bytes)
-        val actual = stream.readUntil(expected = 0x03)
-        assertEquals(3, actual.size)
-        assertTrue(bytes.copyOf(3).contentEquals(actual))
+        listOf<Triple<ByteArray, Byte, ByteArray>>(
+            Triple(byteArrayOf(), 1, byteArrayOf()),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 1, byteArrayOf()),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 2, byteArrayOf(1)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 3, byteArrayOf(1, 2, 2)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 4, byteArrayOf(1, 2, 2, 3, 3, 3)),
+        ).forEach { (src, byte, expected) ->
+            val stream = ByteArrayInputStream(src)
+            val actual = stream.readUntil(expected = byte)
+            assertTrue(expected.contentEquals(actual))
+        }
     }
 
     @Test
