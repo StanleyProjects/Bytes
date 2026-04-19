@@ -157,7 +157,11 @@ fun InputStream.readBytes(size: Int): ByteArray {
 
 fun InputStream.readUntil(expected: Byte): ByteArray {
     val dst = ByteArrayOutputStream()
-    TODO("InputStream:readUntil($expected)")
+    while (true) {
+        val value = read()
+        if (value == -1 || expected == value.toByte()) return dst.toByteArray()
+        dst.write(value)
+    }
 }
 
 fun InputStream.readUntil(expected: ByteArray): ByteArray {
