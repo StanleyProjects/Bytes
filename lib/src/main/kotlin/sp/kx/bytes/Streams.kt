@@ -182,7 +182,7 @@ fun InputStream.readUntil(until: ByteArray): ByteArray {
         }
         val value = read()
         if (value == -1) {
-            dst.write(buffer.copyOfRange(index - until.size, index))
+            dst.write(buffer, index - until.size, until.size)
             return dst.toByteArray()
         }
         buffer[index] = value.toByte()
