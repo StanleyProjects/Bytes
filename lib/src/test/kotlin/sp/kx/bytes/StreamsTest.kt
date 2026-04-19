@@ -175,20 +175,25 @@ internal class StreamsTest {
             Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 2, byteArrayOf(1)),
             Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 3, byteArrayOf(1, 2, 2)),
             Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 4, byteArrayOf(1, 2, 2, 3, 3, 3)),
-        ).forEach { (src, byte, expected) ->
+        ).forEach { (src, until, expected) ->
             val stream = ByteArrayInputStream(src)
-            val actual = stream.readUntil(expected = byte)
+            val actual = stream.readUntil(until = until)
             assertTrue(expected.contentEquals(actual))
         }
     }
 
     @Test
     fun readUntilByteArrayTest() {
-        val bytes = byteArrayOf(0x01, 0x02, 0x02, 0x03, 0x03, 0x03)
-        check(bytes.size == 6)
-        val stream = ByteArrayInputStream(bytes)
-        val actual = stream.readUntil(expected = byteArrayOf(0x03, 0x03))
-        assertEquals(3, actual.size)
-        assertTrue(bytes.copyOf(3).contentEquals(actual))
+        listOf(
+            Triple(byteArrayOf(), byteArrayOf(1), byteArrayOf()),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), byteArrayOf(1), byteArrayOf()),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), byteArrayOf(2), byteArrayOf(1)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), byteArrayOf(3), byteArrayOf(1, 2, 2)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), byteArrayOf(4), byteArrayOf(1, 2, 2, 3, 3, 3)),
+        ).forEach { (src, until, expected) ->
+            val stream = ByteArrayInputStream(src)
+            val actual = stream.readUntil(until = until)
+            assertTrue(expected.contentEquals(actual))
+        }
     }
 }

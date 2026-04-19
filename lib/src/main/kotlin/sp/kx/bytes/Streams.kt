@@ -155,39 +155,39 @@ fun InputStream.readBytes(size: Int): ByteArray {
     return bytes
 }
 
-fun InputStream.readUntil(expected: Byte): ByteArray {
+fun InputStream.readUntil(until: Byte): ByteArray {
     val dst = ByteArrayOutputStream()
     while (true) {
         val value = read()
-        if (value == -1 || expected == value.toByte()) return dst.toByteArray()
+        if (value == -1 || until == value.toByte()) return dst.toByteArray()
         dst.write(value)
     }
 }
 
-fun InputStream.readUntil(expected: ByteArray): ByteArray {
-    if (expected.size == 0 || expected.size > 32) TODO()
-    val buffer = ByteArray(kotlin.math.max(expected.size, 8))
+fun InputStream.readUntil(until: ByteArray): ByteArray {
+    if (until.size == 0 || until.size > 32) TODO()
+    val buffer = ByteArray(kotlin.math.max(until.size, 8))
     var index = 0
-    while (index < expected.size) {
+    while (index < until.size) {
         val value = read()
         if (value == -1) return buffer.copyOf(index)
         buffer[index++] = value.toByte()
     }
-    if (buffer.copyOf(expected.size).contentEquals(expected)) return ByteArray(0)
+    if (buffer.copyOf(until.size).contentEquals(until)) return ByteArray(0)
     val dst = ByteArrayOutputStream()
     while (true) {
         if (index == buffer.size) {
-            System.arraycopy(buffer, index - expected.size, buffer, 0, expected.size)
-            index = expected.size
+            System.arraycopy(buffer, index - until.size, buffer, 0, until.size)
+            index = until.size
         }
         val value = read()
         if (value == -1) {
-            dst.write(buffer.copyOfRange(index - expected.size, index))
+            dst.write(buffer.copyOfRange(index - until.size, index))
             return dst.toByteArray()
         }
         buffer[index] = value.toByte()
-        dst.write(buffer[index - expected.size].toInt().and(0xff))
+        dst.write(buffer[index - until.size].toInt().and(0xff))
         index++
-        if (buffer.copyOfRange(index - expected.size, index).contentEquals(expected)) return dst.toByteArray()
+        if (buffer.copyOfRange(index - until.size, index).contentEquals(until)) return dst.toByteArray()
     }
 }
