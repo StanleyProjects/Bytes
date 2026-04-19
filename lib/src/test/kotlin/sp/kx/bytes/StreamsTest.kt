@@ -1,11 +1,11 @@
 package sp.kx.bytes
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.UUID
-import org.junit.jupiter.api.Assertions.assertTrue
 
 internal class StreamsTest {
     @Test
