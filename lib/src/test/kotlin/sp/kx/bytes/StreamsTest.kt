@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.UUID
+import org.junit.jupiter.api.Assertions.assertTrue
 
 internal class StreamsTest {
     @Test
@@ -164,5 +165,25 @@ internal class StreamsTest {
             assertEquals(size, actual.size)
             assertEquals(expected, actual.readInt(index = 4))
         }
+    }
+
+    @Test
+    fun readUntilTest() {
+        val bytes = byteArrayOf(0x01, 0x02, 0x02, 0x03, 0x03, 0x03)
+        check(bytes.size == 6)
+        val stream = ByteArrayInputStream(bytes)
+        val actual = stream.readUntil(expected = 0x03)
+        assertEquals(3, actual.size)
+        assertTrue(bytes.copyOf(3).contentEquals(actual))
+    }
+
+    @Test
+    fun readUntilByteArrayTest() {
+        val bytes = byteArrayOf(0x01, 0x02, 0x02, 0x03, 0x03, 0x03)
+        check(bytes.size == 6)
+        val stream = ByteArrayInputStream(bytes)
+        val actual = stream.readUntil(expected = byteArrayOf(0x03, 0x03))
+        assertEquals(3, actual.size)
+        assertTrue(bytes.copyOf(3).contentEquals(actual))
     }
 }

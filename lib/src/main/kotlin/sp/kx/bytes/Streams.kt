@@ -1,5 +1,6 @@
 package sp.kx.bytes
 
+import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.UUID
@@ -152,4 +153,14 @@ fun InputStream.readBytes(size: Int): ByteArray {
     val bytes = ByteArray(size)
     read(bytes)
     return bytes
+}
+
+fun InputStream.readUntil(expected: Byte): ByteArray {
+    val dst = ByteArrayOutputStream()
+    TODO("InputStream:readUntil($expected)")
+}
+
+fun InputStream.readUntil(expected: ByteArray): ByteArray {
+    val dst = ByteArrayOutputStream()
+    TODO("InputStream:readUntil")
 }
