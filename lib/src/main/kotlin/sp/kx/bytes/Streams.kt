@@ -165,6 +165,29 @@ fun InputStream.readUntil(expected: Byte): ByteArray {
 }
 
 fun InputStream.readUntil(expected: ByteArray): ByteArray {
+    if (expected.size == 0 || expected.size > 32) TODO()
+    val buffer = ByteArray(kotlin.math.max(expected.size, 8))
+    var index = 0
+    while (index < expected.size) {
+        val value = read()
+        if (value == -1) return buffer.copyOf(index)
+        buffer[index++] = value.toByte()
+    }
+    if (buffer.copyOf(expected.size).contentEquals(expected)) return ByteArray(0)
     val dst = ByteArrayOutputStream()
-    TODO("InputStream:readUntil")
+    while (true) {
+        if (index == buffer.size) {
+            System.arraycopy(buffer, index - expected.size, buffer, 0, expected.size)
+            index = expected.size
+        }
+        val value = read()
+        if (value == -1) {
+            dst.write(buffer.copyOfRange(index - expected.size, index))
+            return dst.toByteArray()
+        }
+        buffer[index] = value.toByte()
+        dst.write(buffer[index - expected.size].toInt().and(0xff))
+        index++
+        if (buffer.copyOfRange(index - expected.size, index).contentEquals(expected)) return dst.toByteArray()
+    }
 }
