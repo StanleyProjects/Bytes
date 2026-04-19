@@ -1,5 +1,6 @@
 package sp.kx.bytes
 
+import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.UUID
@@ -152,4 +153,41 @@ fun InputStream.readBytes(size: Int): ByteArray {
     val bytes = ByteArray(size)
     read(bytes)
     return bytes
+}
+
+fun InputStream.readUntil(until: Byte): ByteArray {
+    val dst = ByteArrayOutputStream()
+    while (true) {
+        val value = read()
+        if (value == -1 || until == value.toByte()) return dst.toByteArray()
+        dst.write(value)
+    }
+}
+
+fun InputStream.readUntil(until: ByteArray): ByteArray {
+    if (until.size == 0 || until.size > 32) TODO()
+    val buffer = ByteArray(kotlin.math.max(until.size, 8))
+    var index = 0
+    while (index < until.size) {
+        val value = read()
+        if (value == -1) return buffer.copyOf(index)
+        buffer[index++] = value.toByte()
+    }
+    if (buffer.copyOf(until.size).contentEquals(until)) return ByteArray(0)
+    val dst = ByteArrayOutputStream()
+    while (true) {
+        if (index == buffer.size) {
+            System.arraycopy(buffer, index - until.size, buffer, 0, until.size)
+            index = until.size
+        }
+        val value = read()
+        if (value == -1) {
+            dst.write(buffer, index - until.size, until.size)
+            return dst.toByteArray()
+        }
+        buffer[index] = value.toByte()
+        dst.write(buffer[index - until.size].toInt().and(0xff))
+        index++
+        if (buffer.copyOfRange(index - until.size, index).contentEquals(until)) return dst.toByteArray()
+    }
 }

@@ -1,6 +1,7 @@
 package sp.kx.bytes
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -163,6 +164,39 @@ internal class StreamsTest {
             val actual = stream.readBytes(size = size)
             assertEquals(size, actual.size)
             assertEquals(expected, actual.readInt(index = 4))
+        }
+    }
+
+    @Test
+    fun readUntilTest() {
+        listOf<Triple<ByteArray, Byte, ByteArray>>(
+            Triple(byteArrayOf(), 1, byteArrayOf()),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 1, byteArrayOf()),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 2, byteArrayOf(1)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 3, byteArrayOf(1, 2, 2)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), 4, byteArrayOf(1, 2, 2, 3, 3, 3)),
+        ).forEach { (src, until, expected) ->
+            val stream = ByteArrayInputStream(src)
+            val actual = stream.readUntil(until = until)
+            assertTrue(expected.contentEquals(actual))
+        }
+    }
+
+    @Test
+    fun readUntilByteArrayTest() {
+        listOf(
+            Triple(byteArrayOf(), byteArrayOf(1), byteArrayOf()),
+            Triple(byteArrayOf(1, 2, 2), byteArrayOf(1, 2, 2, 3), byteArrayOf(1, 2, 2)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), byteArrayOf(1), byteArrayOf()),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), byteArrayOf(2), byteArrayOf(1)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), byteArrayOf(3), byteArrayOf(1, 2, 2)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), byteArrayOf(4), byteArrayOf(1, 2, 2, 3, 3, 3)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3), byteArrayOf(2, 3), byteArrayOf(1, 2)),
+            Triple(byteArrayOf(1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6), byteArrayOf(7), byteArrayOf(1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6)),
+        ).forEach { (src, until, expected) ->
+            val stream = ByteArrayInputStream(src)
+            val actual = stream.readUntil(until = until)
+            assertTrue(expected.contentEquals(actual))
         }
     }
 }
